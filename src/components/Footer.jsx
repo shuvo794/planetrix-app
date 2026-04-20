@@ -6,9 +6,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12">
         {/* Left side: Logo and Description */}
         <div className="max-w-md text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-4 mb-8">
-            <img src="/Logo.png" alt="Planetrix Logo" className="w-10 h-10 object-contain" />
-            <span className="text-white text-2xl font-bold tracking-[0.3em] uppercase">Planetrix</span>
+          <div className="flex items-center justify-center md:justify-start mb-8">
+            <img src="/Logo.png" alt="Planetrix Logo" className="h-10 w-auto object-contain" />
           </div>
           <p className="text-slate-400 leading-relaxed text-lg">
             Lorem ipsum dolor sit amet consectetur. Fusce sed aliquam amet curabitur eget quam. 
