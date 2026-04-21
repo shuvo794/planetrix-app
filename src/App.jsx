@@ -168,19 +168,40 @@ const PlanetView = () => {
   const { planetId } = useParams();
   const navigate = useNavigate();
   const [direction, setDirection] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(false);
+  const [activePlanetData, setActivePlanetData] = useState(null);
 
   const currentIndex = PLANETS.findIndex((p) => p.id === planetId) || 0;
-  const activePlanet = PLANETS[currentIndex] || PLANETS[0];
+  const targetPlanet = PLANETS[currentIndex] || PLANETS[0];
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    let isMounted = true;
     setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800); // Simulate 800ms loading delay
-    return () => clearTimeout(timer);
-  }, [planetId]);
+    setShowSkeleton(false);
+
+    // Show skeleton ONLY if data takes more than 200ms to load
+    const skeletonTimer = setTimeout(() => {
+      if (isMounted) setShowSkeleton(true);
+    }, 200);
+
+    // Simulate an API fetch (currently fast since data is local)
+    // If you connect a real API later that takes > 200ms, the skeleton will automatically show.
+    const simulateFetch = setTimeout(() => {
+      if (isMounted) {
+        clearTimeout(skeletonTimer);
+        setActivePlanetData(targetPlanet);
+        setLoading(false);
+        setShowSkeleton(false);
+      }
+    }, 50); // Fast load (50ms) -> Skeleton will NOT show
+
+    return () => {
+      isMounted = false;
+      clearTimeout(skeletonTimer);
+      clearTimeout(simulateFetch);
+    };
+  }, [planetId, targetPlanet]);
 
   const nextPlanet = () => {
     setDirection(1);
@@ -194,16 +215,19 @@ const PlanetView = () => {
     navigate(`/${PLANETS[prevIdx].id}`);
   };
 
+  // If we haven't loaded the initial data yet, show skeleton or nothing
+  const displayPlanet = activePlanetData || targetPlanet;
+
   return (
     <main className="relative z-10 pt-32 md:pt-48 pb-0 flex-grow">
-      {loading ? (
+      {showSkeleton ? (
         <PlanetSkeleton />
       ) : (
         <>
           <div className="max-w-[1600px] mx-auto px-8 md:px-16 text-center">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={activePlanet.id}
+                key={displayPlanet.id}
                 custom={direction}
                 initial={{ opacity: 0, x: direction * 50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -211,18 +235,18 @@ const PlanetView = () => {
                 transition={{ type: "spring", bounce: 0, duration: 1.5 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-16">
-                  {activePlanet.name}
+                  {displayPlanet.name}
                 </h2>
                 <PlanetStats
-                  stats={activePlanet.stats}
-                  color={activePlanet.color}
+                  stats={displayPlanet.stats}
+                  color={displayPlanet.color}
                 />
               </motion.div>
             </AnimatePresence>
           </div>
 
           <SolarSystem
-            activePlanet={activePlanet}
+            activePlanet={displayPlanet}
             onNext={nextPlanet}
             onPrev={prevPlanet}
             leftPlanet={
