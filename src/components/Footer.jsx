@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
@@ -7,23 +7,55 @@ const Footer = () => {
         {/* Left: Logo & Description */}
         <div className="max-w-md">
           <div className="flex items-center mb-8">
-            <img src="/Logo.png" alt="Planetrix Logo" className="h-9 w-auto brightness-110" />
+            <img
+              src="/Logo.png"
+              alt="Planetrix Logo"
+              className="h-9 w-auto brightness-110"
+            />
           </div>
           <p className="text-slate-400 leading-relaxed text-base md:text-lg font-light">
-            Journey through the cosmos with Planetrix. Discover the secrets of our solar system 
-            through an immersive interactive experience designed for explorers of all ages.
+            Journey through the cosmos with Planetrix. Discover the secrets of
+            our solar system through an immersive interactive experience
+            designed for explorers of all ages.
           </p>
         </div>
 
         {/* Right: Vertical Links */}
         <div className="flex flex-col gap-4 text-right">
-          <h4 className="text-white/20 font-bold tracking-[0.2em] uppercase text-xs mb-2">Navigation</h4>
+          <h4 className="text-white/20 font-bold tracking-[0.2em] uppercase text-xs mb-2">
+            Navigation
+          </h4>
           <nav className="flex flex-col gap-3 text-slate-400 text-base md:text-lg">
-            <a href="#" className="hover:text-white transition-all hover:-translate-x-1">About Us</a>
-            <a href="#" className="hover:text-white transition-all hover:-translate-x-1">Blog</a>
-            <a href="#" className="hover:text-white transition-all hover:-translate-x-1">Career</a>
-            <a href="#" className="hover:text-white transition-all hover:-translate-x-1">FAQ</a>
-            <a href="#" className="hover:text-white transition-all hover:-translate-x-1">Contact us</a>
+            <a
+              href="#"
+              className="hover:text-white transition-all hover:-translate-x-1"
+            >
+              About Us
+            </a>
+            <a
+              href="#"
+              className="hover:text-white transition-all hover:-translate-x-1"
+            >
+              Blog
+            </a>
+            <a
+              href="#"
+              className="hover:text-white transition-all hover:-translate-x-1"
+            >
+              Career
+            </a>
+            <a
+              href="#"
+              className="hover:text-white transition-all hover:-translate-x-1"
+            >
+              FAQ
+            </a>
+            <a
+              href="#"
+              className="hover:text-white transition-all hover:-translate-x-1"
+            >
+              Contact us
+            </a>
           </nav>
         </div>
       </div>
