@@ -15,12 +15,12 @@ const SolarSystem = ({
       {/* Subtle Circular Orbits */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        animate={{ 
-          rotate: [currentIndex * 45, currentIndex * 45 + 360] 
+        animate={{
+          rotate: [currentIndex * 45, currentIndex * 45 + 360],
         }}
-        transition={{ 
+        transition={{
           rotate: { repeat: Infinity, duration: 150, ease: "linear" },
-          default: { type: "spring", bounce: 0, duration: 2.5 }
+          default: { type: "spring", bounce: 0, duration: 2.5 },
         }}
       >
         {[200, 350, 500, 700, 900].map((size, i) => (
