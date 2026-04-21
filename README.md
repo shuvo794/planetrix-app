@@ -2,8 +2,6 @@
 
 Welcome to **Planetrix**, an immersive, interactive journey through our solar system. Designed with love for space enthusiasts and explorers alike, Planetrix brings the wonders of the universe right to your screen with a premium, celestial aesthetic and fluid animations.
 
-![Planetrix Preview](https://your-preview-image-link.com)
-
 ## 🚀 The Experience
 
 Planetrix isn't just a website; it's a cosmic experience. We've built an interface that feels alive—from the subtle rotation of orbital rings to the gentle floating of distant moons.
