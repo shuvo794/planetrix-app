@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PlanetStats from "./components/PlanetStats";
 import SolarSystem from "./components/SolarSystem";
+import { PlanetSkeleton } from "./components/Skeleton";
 
 const PLANETS = [
   {
@@ -167,11 +168,20 @@ const PLANETS = [
 const PlanetView = () => {
   const { planetId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [direction, setDirection] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const currentIndex = PLANETS.findIndex((p) => p.id === planetId) || 0;
   const activePlanet = PLANETS[currentIndex] || PLANETS[0];
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800); // Simulate 800ms loading delay
+    return () => clearTimeout(timer);
+  }, [planetId]);
 
   const nextPlanet = () => {
     setDirection(1);
@@ -187,38 +197,44 @@ const PlanetView = () => {
 
   return (
     <main className="relative z-10 pt-32 md:pt-48 pb-0 flex-grow">
-      <div className="max-w-[1600px] mx-auto px-8 md:px-16 text-center">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={activePlanet.id}
-            custom={direction}
-            initial={{ opacity: 0, x: direction * 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -direction * 50 }}
-            transition={{ type: "spring", bounce: 0, duration: 1.5 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-16">
-              {activePlanet.name}
-            </h2>
-            <PlanetStats
-              stats={activePlanet.stats}
-              color={activePlanet.color}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {loading ? (
+        <PlanetSkeleton />
+      ) : (
+        <>
+          <div className="max-w-[1600px] mx-auto px-8 md:px-16 text-center">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={activePlanet.id}
+                custom={direction}
+                initial={{ opacity: 0, x: direction * 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -direction * 50 }}
+                transition={{ type: "spring", bounce: 0, duration: 1.5 }}
+              >
+                <h2 className="text-3xl md:text-5xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-16">
+                  {activePlanet.name}
+                </h2>
+                <PlanetStats
+                  stats={activePlanet.stats}
+                  color={activePlanet.color}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-      <SolarSystem
-        activePlanet={activePlanet}
-        onNext={nextPlanet}
-        onPrev={prevPlanet}
-        leftPlanet={
-          PLANETS[(currentIndex - 1 + PLANETS.length) % PLANETS.length]
-        }
-        rightPlanet={PLANETS[(currentIndex + 1) % PLANETS.length]}
-        direction={direction}
-        currentIndex={currentIndex}
-      />
+          <SolarSystem
+            activePlanet={activePlanet}
+            onNext={nextPlanet}
+            onPrev={prevPlanet}
+            leftPlanet={
+              PLANETS[(currentIndex - 1 + PLANETS.length) % PLANETS.length]
+            }
+            rightPlanet={PLANETS[(currentIndex + 1) % PLANETS.length]}
+            direction={direction}
+            currentIndex={currentIndex}
+          />
+        </>
+      )}
     </main>
   );
 };
