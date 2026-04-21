@@ -8,24 +8,38 @@ const SolarSystem = ({
   leftPlanet,
   rightPlanet,
   direction,
+  currentIndex,
 }) => {
   return (
-    <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center mt-6 md:mt-10 mb-16 md:mb-20 px-4 md:px-0 select-none overflow-visible">
+    <div className="relative w-full h-[500px] md:h-[750px] flex items-center justify-center mt-20 md:mt-32 mb-24 md:mb-32 px-4 md:px-0 select-none overflow-visible">
       {/* Subtle Circular Orbits */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 md:opacity-100">
-        {[250, 400, 600, 850, 1100].map((size, i) => (
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        animate={{ 
+          rotate: [currentIndex * 45, currentIndex * 45 + 360] 
+        }}
+        transition={{ 
+          rotate: { repeat: Infinity, duration: 150, ease: "linear" },
+          default: { type: "spring", bounce: 0, duration: 2.5 }
+        }}
+      >
+        {[200, 350, 500, 700, 900].map((size, i) => (
           <div
             key={i}
-            className="absolute border border-white/5 rounded-full"
-            style={{ width: size, height: size }}
+            className="absolute border border-white/30 rounded-full border-dashed"
+            style={{
+              width: size,
+              height: size,
+              borderWidth: i % 2 === 0 ? "1.5px" : "2px",
+            }}
           ></div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Side Planet: Left */}
       <motion.div
         onClick={onPrev}
-        className="absolute left-[-160px] sm:left-[-140px] md:left-[-180px] lg:left-[-220px] flex items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute left-[-180px] sm:left-[-140px] md:left-[-200px] lg:left-[-250px] flex items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`left-${leftPlanet.id}`}
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -34,7 +48,7 @@ const SolarSystem = ({
         <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-80 md:h-80">
           <div
             className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
-            style={{ backgroundColor: `${leftPlanet.color}15` }} // 15 for low opacity
+            style={{ backgroundColor: `${leftPlanet.color}40` }}
           ></div>
           <img
             src={leftPlanet.image}
@@ -43,8 +57,8 @@ const SolarSystem = ({
           />
         </div>
         <span
-          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block"
-          style={{ color: `${leftPlanet.color}40` }} // 40 for low opacity
+          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          style={{ color: `${leftPlanet.color}90` }}
         >
           {leftPlanet.name}
         </span>
@@ -53,7 +67,7 @@ const SolarSystem = ({
       {/* Side Planet: Right */}
       <motion.div
         onClick={onNext}
-        className="absolute right-[-160px] sm:right-[-140px] md:right-[-180px] lg:right-[-220px] flex flex-row-reverse items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute right-[-180px] sm:right-[-140px] md:right-[-200px] lg:right-[-250px] flex flex-row-reverse items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`right-${rightPlanet.id}`}
         initial={{ x: 50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -62,7 +76,7 @@ const SolarSystem = ({
         <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-80 md:h-80">
           <div
             className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
-            style={{ backgroundColor: `${rightPlanet.color}15` }}
+            style={{ backgroundColor: `${rightPlanet.color}40` }}
           ></div>
           <img
             src={rightPlanet.image}
@@ -71,8 +85,8 @@ const SolarSystem = ({
           />
         </div>
         <span
-          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block"
-          style={{ color: `${rightPlanet.color}40` }}
+          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          style={{ color: `${rightPlanet.color}90` }}
         >
           {rightPlanet.name}
         </span>
@@ -126,7 +140,11 @@ const SolarSystem = ({
       </AnimatePresence>
 
       {/* Dynamic Decorative smaller planets */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <motion.div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        animate={{ rotate: currentIndex * -30 }}
+        transition={{ type: "spring", bounce: 0, duration: 2.5 }}
+      >
         <AnimatePresence>
           {activePlanet.companions?.map((companion, idx) => (
             <motion.img
@@ -134,10 +152,15 @@ const SolarSystem = ({
               src={companion.image}
               alt="Decorative Planet"
               initial={{ opacity: 0, scale: 0, x: direction * 50 }}
-              animate={{ opacity: 0.15, scale: 1, x: 0 }}
+              animate={{ opacity: 0.6, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0, x: -direction * 50 }}
-              transition={{ type: "spring", bounce: 0, duration: 1.8, delay: idx * 0.15 }}
-              className={`absolute z-30 ${companion.size} aspect-square object-contain opacity-15`}
+              transition={{
+                type: "spring",
+                bounce: 0,
+                duration: 1.8,
+                delay: idx * 0.15,
+              }}
+              className={`absolute z-30 ${companion.size} aspect-square object-contain`}
               style={{
                 top: companion.top,
                 left: companion.left,
@@ -147,7 +170,7 @@ const SolarSystem = ({
             />
           ))}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 };
