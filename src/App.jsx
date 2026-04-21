@@ -5,7 +5,6 @@ import {
   Route,
   useParams,
   useNavigate,
-  useLocation,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "./components/Header";
