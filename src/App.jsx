@@ -192,10 +192,10 @@ const PlanetView = () => {
           <motion.div
             key={activePlanet.id}
             custom={direction}
-            initial={{ opacity: 0, x: direction * 100 }}
+            initial={{ opacity: 0, x: direction * 50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -direction * 100 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            exit={{ opacity: 0, x: -direction * 50 }}
+            transition={{ type: "spring", bounce: 0, duration: 1.5 }}
           >
             <h2 className="text-3xl md:text-5xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-16">
               {activePlanet.name}

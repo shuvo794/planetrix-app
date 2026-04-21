@@ -84,27 +84,31 @@ const SolarSystem = ({
           key={activePlanet.id}
           custom={direction}
           initial={{
-            x: direction === 1 ? "100vw" : direction === -1 ? "-100vw" : 0,
-            rotate: direction === 1 ? 180 : direction === -1 ? -180 : 0,
+            x: direction === 1 ? 250 : direction === -1 ? -250 : 0,
+            y: 40,
+            rotate: direction === 1 ? 20 : direction === -1 ? -20 : 0,
             opacity: 0,
-            scale: 0.3,
+            scale: 0.7,
           }}
           animate={{
             x: 0,
+            y: 0,
             rotate: 0,
             opacity: 1,
             scale: 1,
           }}
           exit={{
-            x: direction === 1 ? "-100vw" : direction === -1 ? "100vw" : 0,
-            rotate: direction === 1 ? -180 : direction === -1 ? 180 : 0,
+            x: direction === 1 ? -250 : direction === -1 ? 250 : 0,
+            y: -40,
+            rotate: direction === 1 ? -20 : direction === -1 ? 20 : 0,
             opacity: 0,
-            scale: 0.3,
+            scale: 0.7,
           }}
           transition={{
-            duration: 0.8,
-            ease: [0.32, 0, 0.67, 0],
-            opacity: { duration: 0.4 },
+            type: "spring",
+            stiffness: 30,
+            damping: 20,
+            mass: 1.5,
           }}
           className="relative z-20 w-[240px] h-[240px] sm:w-[350px] sm:h-[350px] md:w-[550px] md:h-[550px]"
         >
@@ -132,7 +136,7 @@ const SolarSystem = ({
               initial={{ opacity: 0, scale: 0, x: direction * 50 }}
               animate={{ opacity: 0.15, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0, x: -direction * 50 }}
-              transition={{ duration: 0.8, delay: idx * 0.1 }}
+              transition={{ type: "spring", bounce: 0, duration: 1.8, delay: idx * 0.15 }}
               className={`absolute z-30 ${companion.size} aspect-square object-contain opacity-15`}
               style={{
                 top: companion.top,
