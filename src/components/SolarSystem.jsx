@@ -26,7 +26,7 @@ const SolarSystem = ({
         {[200, 350, 500, 700, 900].map((size, i) => (
           <div
             key={i}
-            className="absolute border border-white/30 rounded-full border-dashed"
+            className="absolute border border-white/10 rounded-full border-dashed"
             style={{
               width: size,
               height: size,
@@ -39,13 +39,13 @@ const SolarSystem = ({
       {/* Side Planet: Left */}
       <motion.div
         onClick={onPrev}
-        className="absolute left-[-180px] sm:left-[-140px] md:left-[-200px] lg:left-[-250px] flex items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute left-[-100px] sm:left-[-80px] md:left-[-120px] lg:left-[-140px] flex items-center gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`left-${leftPlanet.id}`}
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-80 md:h-80">
+        <div className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-64">
           <div
             className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
             style={{ backgroundColor: `${leftPlanet.color}40` }}
@@ -57,7 +57,7 @@ const SolarSystem = ({
           />
         </div>
         <span
-          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          className="transition-colors duration-500 text-base sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
           style={{ color: `${leftPlanet.color}90` }}
         >
           {leftPlanet.name}
@@ -67,13 +67,13 @@ const SolarSystem = ({
       {/* Side Planet: Right */}
       <motion.div
         onClick={onNext}
-        className="absolute right-[-180px] sm:right-[-140px] md:right-[-200px] lg:right-[-250px] flex flex-row-reverse items-center gap-4 md:gap-10 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute right-[-100px] sm:right-[-80px] md:right-[-120px] lg:right-[-140px] flex flex-row-reverse items-center gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`right-${rightPlanet.id}`}
         initial={{ x: 50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-80 md:h-80">
+        <div className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-64">
           <div
             className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
             style={{ backgroundColor: `${rightPlanet.color}40` }}
@@ -85,7 +85,7 @@ const SolarSystem = ({
           />
         </div>
         <span
-          className="transition-colors duration-500 text-xl sm:text-3xl md:text-5xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          className="transition-colors duration-500 text-base sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
           style={{ color: `${rightPlanet.color}90` }}
         >
           {rightPlanet.name}
