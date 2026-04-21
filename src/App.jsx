@@ -265,7 +265,7 @@ const PlanetView = () => {
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen bg-[#080b12] text-white selection:bg-blue-500/30 font-sans">
+      <div className="flex flex-col min-h-screen overflow-x-hidden bg-[#080b12] text-white selection:bg-blue-500/30 font-sans">
         <div
           className="fixed inset-0 z-0 opacity-40 bg-cover bg-center pointer-events-none"
           style={{ backgroundImage: "url('/galaxy_background.png')" }}
