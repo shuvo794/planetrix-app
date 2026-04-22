@@ -14,28 +14,11 @@ const SolarSystem = ({
     <div className="relative w-full h-[380px] sm:h-[500px] md:h-[750px] flex items-center justify-center mt-4 sm:mt-12 md:mt-32 mb-8 sm:mb-16 md:mb-32 px-4 md:px-0 select-none overflow-visible">
       {/* Subtle Circular Orbits — static, responsive sizes */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {[
-          { mobile: 160, desktop: 200 },
-          { mobile: 260, desktop: 350 },
-          { mobile: 360, desktop: 500 },
-          { mobile: null, desktop: 700 },
-          { mobile: null, desktop: 900 },
-        ].map((orbit, i) => (
-          <div
-            key={i}
-            className={`absolute border border-white/10 rounded-full border-dashed ${orbit.mobile === null ? "hidden md:block" : ""}`}
-            style={{
-              width: orbit.mobile !== null ? undefined : orbit.desktop,
-              height: orbit.mobile !== null ? undefined : orbit.desktop,
-              borderWidth: i % 2 === 0 ? "1.5px" : "2px",
-              ...(orbit.mobile !== null && {
-                width: "var(--orbit-size)",
-                height: "var(--orbit-size)",
-                "--orbit-size": `clamp(${orbit.mobile}px, ${orbit.mobile + (orbit.desktop - orbit.mobile) * 0.5}px, ${orbit.desktop}px)`,
-              }),
-            }}
-          ></div>
-        ))}
+        <div className="absolute w-[160px] h-[160px] md:w-[200px] md:h-[200px] border border-white/10 rounded-full border-dashed" style={{ borderWidth: "1.5px" }}></div>
+        <div className="absolute w-[260px] h-[260px] md:w-[350px] md:h-[350px] border border-white/10 rounded-full border-dashed" style={{ borderWidth: "2px" }}></div>
+        <div className="absolute w-[360px] h-[360px] md:w-[500px] md:h-[500px] border border-white/10 rounded-full border-dashed" style={{ borderWidth: "1.5px" }}></div>
+        <div className="absolute hidden md:block w-[700px] h-[700px] border border-white/10 rounded-full border-dashed" style={{ borderWidth: "2px" }}></div>
+        <div className="absolute hidden md:block w-[900px] h-[900px] border border-white/10 rounded-full border-dashed" style={{ borderWidth: "1.5px" }}></div>
       </div>
 
       {/* Side Planet: Left — more visible on mobile */}

@@ -10,7 +10,7 @@ const Footer = () => {
             <img
               src="/Logo.png"
               alt="Planetrix Logo"
-              className="h-10 w-auto brightness-110"
+              className="h-8 md:h-10 w-auto brightness-110"
             />
           </div>
           <p className="text-slate-400 leading-relaxed text-sm md:text-lg font-light max-w-md">
@@ -21,8 +21,8 @@ const Footer = () => {
         </div>
 
         {/* Right: Vertical Links */}
-        <div className="flex flex-col gap-4 text-right">
-          <nav className="flex flex-col gap-4 text-slate-400 text-base md:text-lg">
+        <div className="flex flex-col gap-3 md:gap-4 text-left md:text-right">
+          <nav className="flex flex-row flex-wrap md:flex-col gap-x-6 gap-y-2 md:gap-4 text-slate-400 text-sm md:text-lg">
             <a href="#" className="hover:text-white transition-colors">
               About Us
             </a>
@@ -42,11 +42,11 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Decorative Background Glows — box-shadow instead of blur */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-8 h-8 rounded-full pointer-events-none" style={{ boxShadow: '0 0 80px 50px rgba(234,88,12,0.25)' }}></div>
-      <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-8 h-8 rounded-full pointer-events-none" style={{ boxShadow: '0 0 100px 60px rgba(59,130,246,0.12)' }}></div>
+      {/* Decorative Background Glows — hidden on mobile to avoid overlap */}
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-8 h-8 rounded-full pointer-events-none hidden md:block" style={{ boxShadow: '0 0 80px 50px rgba(234,88,12,0.25)' }}></div>
+      <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-8 h-8 rounded-full pointer-events-none hidden md:block" style={{ boxShadow: '0 0 100px 60px rgba(59,130,246,0.12)' }}></div>
 
-      {/* Background Planet Images — low opacity, no blur */}
+      {/* Background Planet Images — desktop only */}
       <img
         src="/Mars.png"
         className="absolute top-1/2 left-[40%] -translate-y-1/2 w-32 opacity-[0.06] pointer-events-none hidden md:block"
