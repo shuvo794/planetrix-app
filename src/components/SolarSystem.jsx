@@ -11,81 +11,83 @@ const SolarSystem = ({
   currentIndex,
 }) => {
   return (
-    <div className="relative w-full h-[500px] md:h-[750px] flex items-center justify-center mt-20 md:mt-32 mb-24 md:mb-32 px-4 md:px-0 select-none overflow-visible">
-      {/* Subtle Circular Orbits */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        animate={{
-          rotate: [currentIndex * 45, currentIndex * 45 + 360],
-        }}
-        transition={{
-          rotate: { repeat: Infinity, duration: 150, ease: "linear" },
-          default: { type: "spring", bounce: 0, duration: 2.5 },
-        }}
-      >
-        {[200, 350, 500, 700, 900].map((size, i) => (
+    <div className="relative w-full h-[380px] sm:h-[500px] md:h-[750px] flex items-center justify-center mt-4 sm:mt-12 md:mt-32 mb-8 sm:mb-16 md:mb-32 px-4 md:px-0 select-none overflow-visible">
+      {/* Subtle Circular Orbits — static, responsive sizes */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {[
+          { mobile: 160, desktop: 200 },
+          { mobile: 260, desktop: 350 },
+          { mobile: 360, desktop: 500 },
+          { mobile: null, desktop: 700 },
+          { mobile: null, desktop: 900 },
+        ].map((orbit, i) => (
           <div
             key={i}
-            className="absolute border border-white/10 rounded-full border-dashed"
+            className={`absolute border border-white/10 rounded-full border-dashed ${orbit.mobile === null ? "hidden md:block" : ""}`}
             style={{
-              width: size,
-              height: size,
+              width: orbit.mobile !== null ? undefined : orbit.desktop,
+              height: orbit.mobile !== null ? undefined : orbit.desktop,
               borderWidth: i % 2 === 0 ? "1.5px" : "2px",
+              ...(orbit.mobile !== null && {
+                width: "var(--orbit-size)",
+                height: "var(--orbit-size)",
+                "--orbit-size": `clamp(${orbit.mobile}px, ${orbit.mobile + (orbit.desktop - orbit.mobile) * 0.5}px, ${orbit.desktop}px)`,
+              }),
             }}
           ></div>
         ))}
-      </motion.div>
+      </div>
 
-      {/* Side Planet: Left */}
+      {/* Side Planet: Left — more visible on mobile */}
       <motion.div
         onClick={onPrev}
-        className="absolute left-[-100px] sm:left-[-80px] md:left-[-120px] lg:left-[-140px] flex items-center gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute left-[-60px] sm:left-[-80px] md:left-[-120px] lg:left-[-140px] flex items-center gap-2 sm:gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`left-${leftPlanet.id}`}
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-64">
+        <div className="relative w-24 h-24 sm:w-40 sm:h-40 md:w-64 md:h-64">
           <div
-            className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
-            style={{ backgroundColor: `${leftPlanet.color}40` }}
+            className="absolute inset-[15%] rounded-full transition-colors duration-700"
+            style={{ boxShadow: `0 0 60px 30px ${leftPlanet.color}40` }}
           ></div>
           <img
             src={leftPlanet.image}
             alt={leftPlanet.name}
-            className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            className="w-full h-full object-contain relative z-10"
           />
         </div>
         <span
-          className="transition-colors duration-500 text-base sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          className="transition-colors duration-500 text-xs sm:text-xl md:text-2xl font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase hidden sm:block"
           style={{ color: `${leftPlanet.color}90` }}
         >
           {leftPlanet.name}
         </span>
       </motion.div>
 
-      {/* Side Planet: Right */}
+      {/* Side Planet: Right — more visible on mobile */}
       <motion.div
         onClick={onNext}
-        className="absolute right-[-100px] sm:right-[-80px] md:right-[-120px] lg:right-[-140px] flex flex-row-reverse items-center gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
+        className="absolute right-[-60px] sm:right-[-80px] md:right-[-120px] lg:right-[-140px] flex flex-row-reverse items-center gap-2 sm:gap-4 md:gap-8 cursor-pointer group z-30 transition-transform hover:scale-105 active:scale-95"
         key={`right-${rightPlanet.id}`}
         initial={{ x: 50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-64">
+        <div className="relative w-24 h-24 sm:w-40 sm:h-40 md:w-64 md:h-64">
           <div
-            className="absolute inset-0 blur-[40px] md:blur-[80px] rounded-full transition-colors duration-700"
-            style={{ backgroundColor: `${rightPlanet.color}40` }}
+            className="absolute inset-[15%] rounded-full transition-colors duration-700"
+            style={{ boxShadow: `0 0 60px 30px ${rightPlanet.color}40` }}
           ></div>
           <img
             src={rightPlanet.image}
             alt={rightPlanet.name}
-            className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            className="w-full h-full object-contain relative z-10"
           />
         </div>
         <span
-          className="transition-colors duration-500 text-base sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase hidden sm:block drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          className="transition-colors duration-500 text-xs sm:text-xl md:text-2xl font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase hidden sm:block"
           style={{ color: `${rightPlanet.color}90` }}
         >
           {rightPlanet.name}
@@ -124,26 +126,30 @@ const SolarSystem = ({
             damping: 20,
             mass: 1.5,
           }}
-          className="relative z-20 w-[240px] h-[240px] sm:w-[350px] sm:h-[350px] md:w-[550px] md:h-[550px]"
+          className="relative z-20 w-[220px] h-[220px] sm:w-[350px] sm:h-[350px] md:w-[550px] md:h-[550px]"
+          style={{ willChange: "transform, opacity" }}
         >
           {/* Dynamic Theme Glow */}
           <div
-            className="absolute inset-0 blur-[60px] md:blur-[120px] rounded-full transition-all duration-1000"
-            style={{ backgroundColor: `${activePlanet.color}30` }} // 30 for theme opacity
+            className="absolute inset-[20%] rounded-full transition-all duration-1000"
+            style={{ boxShadow: `0 0 120px 60px ${activePlanet.color}30` }}
           ></div>
           <img
             src={activePlanet.image}
             alt={activePlanet.name}
-            className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+            className="w-full h-full object-contain relative z-10"
           />
         </motion.div>
       </AnimatePresence>
 
-      {/* Dynamic Decorative smaller planets */}
-      <motion.div
+      {/* Companion planets — CSS transition rotate on click */}
+      <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
-        animate={{ rotate: currentIndex * -30 }}
-        transition={{ type: "spring", bounce: 0, duration: 2.5 }}
+        style={{
+          transform: `rotate(${currentIndex * -30}deg)`,
+          transition: "transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          willChange: "transform",
+        }}
       >
         <AnimatePresence>
           {activePlanet.companions?.map((companion, idx) => (
@@ -151,9 +157,9 @@ const SolarSystem = ({
               key={`${activePlanet.id}-comp-${idx}`}
               src={companion.image}
               alt="Decorative Planet"
-              initial={{ opacity: 0, scale: 0, x: direction * 50 }}
-              animate={{ opacity: 0.6, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0, x: -direction * 50 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.6, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
               transition={{
                 type: "spring",
                 bounce: 0,
@@ -170,7 +176,7 @@ const SolarSystem = ({
             />
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 };

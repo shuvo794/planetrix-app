@@ -219,7 +219,7 @@ const PlanetView = () => {
   const displayPlanet = activePlanetData || targetPlanet;
 
   return (
-    <main className="relative z-10 pt-32 md:pt-48 pb-0 flex-grow">
+    <main className="relative z-10 pt-20 md:pt-40 pb-0 flex-grow">
       {showSkeleton ? (
         <PlanetSkeleton />
       ) : (
@@ -234,7 +234,7 @@ const PlanetView = () => {
                 exit={{ opacity: 0, x: -direction * 50 }}
                 transition={{ type: "spring", bounce: 0, duration: 1.5 }}
               >
-                <h2 className="text-3xl md:text-5xl font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-16">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-16">
                   {displayPlanet.name}
                 </h2>
                 <PlanetStats
